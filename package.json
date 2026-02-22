@@ -1,0 +1,21 @@
+{
+  "name": "gestion-stock-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean",
+    "db:generate": "cd app && prisma generate",
+    "db:push": "cd app && prisma db push",
+    "db:seed": "cd app && node prisma/seed.js"
+  },
+  "devDependencies": {
+    "turbo": "^1.10.13"
+  }
+}

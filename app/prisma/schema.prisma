@@ -1,0 +1,186 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      Role     @default(VENDEUR)
+  storeId   String?  @map("store_id")
+  actif     Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  sales     Sale[]
+  movements StockMovement[]
+
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  VENDEUR
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  parentId    String?  @map("parent_id")
+  actif       Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  parent   Category? @relation("CategoryToCategory", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryToCategory")
+  products Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id           String   @id @default(uuid())
+  codeBarre    String?  @unique @map("code_barre")
+  reference    String   @unique
+  nom          String
+  description  String?
+  categorieId  String   @map("categorie_id")
+  prixAchat    Decimal  @map("prix_achat") @db.Decimal(10, 2)
+  prixVente    Decimal  @map("prix_vente") @db.Decimal(10, 2)
+  tva          Decimal  @default(20.0) @db.Decimal(5, 2)
+  seuilAlerte  Int      @default(5) @map("seuil_alerte")
+  imageUrl     String?  @map("image_url")
+  variations   Json?
+  actif        Boolean  @default(true)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  categorie      Category        @relation(fields: [categorieId], references: [id])
+  stockMovements StockMovement[]
+  saleItems      SaleItem[]
+
+  @@map("products")
+}
+
+model StockMovement {
+  id          String       @id @default(uuid())
+  type        MovementType
+  quantity    Int
+  productId   String       @map("product_id")
+  userId      String?      @map("user_id")
+  saleId      String?      @map("sale_id")
+  motif       String?
+  fournisseur String?
+  createdAt   DateTime     @default(now()) @map("created_at")
+
+  // Relations
+  product Product @relation(fields: [productId], references: [id])
+  user    User?   @relation(fields: [userId], references: [id])
+  sale    Sale?   @relation(fields: [saleId], references: [id])
+
+  @@map("stock_movements")
+}
+
+enum MovementType {
+  ENTRY
+  EXIT_SALE
+  EXIT_MANUAL
+}
+
+model Sale {
+  id         String     @id @default(uuid())
+  numero     String     @unique
+  date       DateTime   @default(now())
+  userId     String     @map("user_id")
+  totalHT    Decimal    @map("total_ht") @db.Decimal(10, 2)
+  totalTVA   Decimal    @map("total_tva") @db.Decimal(10, 2)
+  totalTTC   Decimal    @map("total_ttc") @db.Decimal(10, 2)
+  remise     Decimal?   @default(0) @db.Decimal(10, 2)
+  statut     SaleStatus @default(COMPLETED)
+  refundOfId String?    @map("refund_of_id")
+  
+  // NF525 Conformité
+  previousHash String?  @map("previous_hash")
+  hash         String?
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user          User            @relation(fields: [userId], references: [id])
+  items         SaleItem[]
+  payments      Payment[]
+  movements     StockMovement[]
+  refundOf      Sale?           @relation("Refund", fields: [refundOfId], references: [id])
+  refunds       Sale[]          @relation("Refund")
+
+  @@map("sales")
+}
+
+enum SaleStatus {
+  COMPLETED
+  REFUNDED
+  CANCELLED
+}
+
+model SaleItem {
+  id           String  @id @default(uuid())
+  saleId       String  @map("sale_id")
+  productId    String  @map("product_id")
+  quantity     Int
+  prixUnitaire Decimal @map("prix_unitaire") @db.Decimal(10, 2)
+  tva          Decimal @db.Decimal(5, 2)
+  remise       Decimal? @default(0) @db.Decimal(10, 2)
+
+  // Relations
+  sale    Sale    @relation(fields: [saleId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("sale_items")
+}
+
+model Payment {
+  id      String      @id @default(uuid())
+  saleId  String      @map("sale_id")
+  mode    PaymentMode
+  montant Decimal     @db.Decimal(10, 2)
+
+  // Relations
+  sale Sale @relation(fields: [saleId], references: [id])
+
+  @@map("payments")
+}
+
+enum PaymentMode {
+  CASH
+  CARD
+  CHECK
+  TRANSFER
+}
+
+model Fournisseur {
+  id        String   @id @default(uuid())
+  nom       String
+  contact   String?
+  telephone String?
+  email     String?
+  adresse   String?
+  actif     Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("fournisseurs")
+}
