@@ -2,7 +2,7 @@ import { ReactNode, useState } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { hasPermission } from '@gestion-stock/shared'
+import { hasPermission } from '../../../shared/src'
 
 interface DashboardLayoutProps {
   children: ReactNode

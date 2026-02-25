@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../auth/[...nextauth]'
 import { prisma } from '@/lib/prisma'
-import { SaleData } from '@gestion-stock/shared'
+import { SaleData } from '../../../../shared/src'
 import { Decimal } from '@prisma/client/runtime/library'
 import crypto from 'crypto'
 

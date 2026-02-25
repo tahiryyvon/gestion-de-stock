@@ -3,8 +3,8 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import DashboardLayout from '@/components/layouts/DashboardLayout'
-import { Product } from '@gestion-stock/shared'
-import { formatPrice } from '@gestion-stock/shared'
+import { Product } from '../../../shared/src'
+import { formatPrice } from '../../../shared/src'
 import toast from 'react-hot-toast'
 
 interface ProductsResponse {

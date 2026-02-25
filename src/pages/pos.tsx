@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import DashboardLayout from '@/components/layouts/DashboardLayout'
-import { Product, CartItem, SaleFormData } from '@gestion-stock/shared'
-import { formatPrice, generateTicketNumber } from '@gestion-stock/shared'
+import { Product, CartItem, SaleFormData } from '../../shared/src'
+import { formatPrice, generateTicketNumber } from '../../shared/src'
 import toast from 'react-hot-toast'
 
 export default function POSPage() {

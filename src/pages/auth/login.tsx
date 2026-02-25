@@ -3,7 +3,7 @@ import { signIn, getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LoginSchema, LoginData } from '@gestion-stock/shared'
+import { LoginSchema, LoginData } from '../../../shared/src'
 import toast from 'react-hot-toast'
 
 export default function LoginPage() {

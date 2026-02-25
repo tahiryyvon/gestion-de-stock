@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../auth/[...nextauth]'
 import { PrismaClient } from '@prisma/client'
-import { ProductSchema } from '@gestion-stock/shared'
+import { ProductSchema } from '../../../../shared/src'
 
 const prisma = new PrismaClient()
 

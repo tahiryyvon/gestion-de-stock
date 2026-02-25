@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import DashboardLayout from '@/components/layouts/DashboardLayout'
-import { ProductSchema, ProductData, Category } from '@gestion-stock/shared'
+import { ProductSchema, ProductData, Category } from '../../../shared/src'
 import toast from 'react-hot-toast'
 
 interface ProductFormData extends ProductData {

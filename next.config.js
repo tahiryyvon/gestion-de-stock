@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['@gestion-stock/shared'],
   experimental: {
     serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs']
   },

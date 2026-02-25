@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import DashboardLayout from '@/components/layouts/DashboardLayout'
-import { StockMovement, Product } from '@gestion-stock/shared'
-import { formatPrice, formatDateTime } from '@gestion-stock/shared'
+import { StockMovement, Product } from '../../../shared/src'
+import { formatPrice, formatDateTime } from '../../../shared/src'
 import toast from 'react-hot-toast'
 
 export default function StockPage() {
