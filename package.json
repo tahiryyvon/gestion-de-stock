@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "npm run install-all && npx prisma generate && cd app && npm run build --workspace=packages/web",
+    "build": "npm run install-all && npx prisma@5.22.0 generate && cd app && npm run build --workspace=packages/web",
     "dev": "cd app && npm run dev --workspace=packages/web",
     "start": "cd app && npm run start --workspace=packages/web",
     "install-all": "cd app && npm install"
