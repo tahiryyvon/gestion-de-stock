@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "cd app/packages/web && npm install && npx prisma@5.22.0 generate && npm run build",
+  "buildCommand": "cd app && npm run build",
   "outputDirectory": "app/packages/web/.next",
-  "installCommand": "cd app/packages/web && npm install"
+  "installCommand": "cd app && npm install"
 }

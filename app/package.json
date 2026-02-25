@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspace=packages/web",
-    "build": "npx prisma generate && npm run build --workspace=packages/web",
+    "build": "npx prisma@5.22.0 generate && npm run build --workspace=packages/web",
     "build:desktop": "npm run build --workspace=packages/desktop",
     "start": "npm run start --workspace=packages/web",
     "lint": "npm run lint --workspaces",
