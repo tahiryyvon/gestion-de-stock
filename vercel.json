@@ -1,7 +1,1 @@
-{
-  "functions": {
-    "app/packages/web/src/pages/api/**/*.ts": {
-      "runtime": "nodejs18.x"
-    }
-  }
-}
+{}
