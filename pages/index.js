@@ -1,10 +1,10 @@
 export default function Home() {
   return (
     <div>
-      <h1>✅ Application déployée avec succès!</h1>
-      <p>Gestion de Stock - Version Simple</p>
-      <p>Date: {new Date().toLocaleDateString()}</p>
-      <p>Status: En ligne</p>
+      <h1>Application Gestion de Stock</h1>
+      <p>Déployée avec succès sur Vercel!</p>
+      <p>Status: OK</p>
+      <p>Version: Simple</p>
     </div>
   )
 }
