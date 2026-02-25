@@ -90,7 +90,7 @@ export interface CartItem {
   remise?: number;
 }
 
-export interface SaleData {
+export interface SaleFormData {
   items: {
     productId: string;
     quantity: number;
