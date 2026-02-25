@@ -21,12 +21,13 @@ APP_MODE=web
 
 ### 2. 📁 Configuration Build dans Vercel
 
-Si vous n'avez pas encore configuré le projet :
+Dans le Dashboard Vercel, configurez :
 
-1. **Root Directory** : `app`
+1. **Root Directory** : `./` (racine du projet)
 2. **Build Command** : `npm run build`
-3. **Output Directory** : `packages/web/.next`
-4. **Install Command** : `npm install`
+3. **Output Directory** : `app/packages/web/.next`
+4. **Install Command** : `npm run install-all`
+5. **Node.js Version** : `18.x`
 
 ### 3. 🗄️ Base de données
 
