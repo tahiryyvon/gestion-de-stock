@@ -79,7 +79,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         numero: ticketNumber,
         date: new Date().toISOString(),
         totalTTC: totalTTC.toFixed(2),
-        vendeurId: session.user.id
+        userId: session.user.id
       }
       const hashString = JSON.stringify(hashData)
       const hash = crypto.createHash('sha256').update(hashString).digest('hex')
@@ -143,7 +143,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             statut: 'COMPLETED',
             hash,
             previousHash: previousSale?.hash || '',
-            vendeurId: session.user.id,
+            userId: session.user.id,
             items: {
               create: items.map(item => ({
                 productId: item.productId,
@@ -167,11 +167,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               }
             },
             payments: true,
-            vendeur: {
+            user: {
               select: {
-                nom: true,
-                prenom: true,
-                email: true
+                name: true,
+                email: true,
+                role: true
               }
             }
           }
@@ -203,10 +203,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       if (search) {
         where.OR = [
-          { ticketNumber: { contains: search as string, mode: 'insensitive' } },
-          { vendeur: { 
+          { numero: { contains: search as string, mode: 'insensitive' } },
+          { user: { 
             OR: [
-              { nom: { contains: search as string, mode: 'insensitive' } },
+              { name: { contains: search as string, mode: 'insensitive' } },
               { email: { contains: search as string, mode: 'insensitive' } }
             ]
           }}
@@ -247,11 +247,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               }
             },
             payments: true,
-            vendeur: {
+            user: {
               select: {
-                nom: true,
-                prenom: true,
-                email: true
+                name: true,
+                email: true,
+                role: true
               }
             }
           }
