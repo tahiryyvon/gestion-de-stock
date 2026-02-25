@@ -41,15 +41,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (type === 'EXIT_MANUAL') {
         const stockMovements = await prisma.stockMovement.aggregate({
           where: {
-            productId,
-            statut: 'VALIDATED'
+            productId
           },
           _sum: {
-            quantite: true
+            quantity: true
           }
         })
 
-        const currentStock = stockMovements._sum.quantite || 0
+        const currentStock = stockMovements._sum.quantity || 0
         if (currentStock < quantite) {
           return res.status(400).json({ 
             error: `Stock insuffisant. Stock actuel: ${currentStock}` 
@@ -64,11 +63,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         data: {
           productId,
           type,
-          quantite: finalQuantite,
-          prixUnitaire: new Decimal(prixUnitaire),
+          quantity: finalQuantite,
           motif: motif || undefined,
-          statut: 'VALIDATED',
-          createdBy: session.user.id
+          userId: session.user.id
         },
         include: {
           product: {
@@ -77,11 +74,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               reference: true
             }
           },
-          createdByUser: {
+          user: {
             select: {
-              nom: true,
-              prenom: true,
-              email: true
+              name: true,
+              email: true,
+              role: true
             }
           }
         }
@@ -162,16 +159,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 imageUrl: true
               }
             },
-            createdByUser: {
+            user: {
               select: {
-                nom: true,
-                prenom: true,
+                name: true,
                 email: true
               }
             },
             sale: {
               select: {
-                ticketNumber: true,
                 numero: true
               }
             }
