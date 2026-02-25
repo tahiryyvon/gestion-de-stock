@@ -107,11 +107,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           take: 5,
           orderBy: { createdAt: 'desc' },
           include: {
-            vendeur: {
+            user: {
               select: {
-                nom: true,
-                prenom: true,
-                email: true
+                name: true,
+                email: true,
+                role: true
               }
             },
             items: {
