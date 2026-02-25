@@ -1,6 +1,7 @@
 {
-  "version": 2,
-  "buildCommand": "cd app && npm run build",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd app && npx prisma@5.22.0 generate --schema=prisma/schema.prisma && npm run build --workspace=packages/web",
   "outputDirectory": "app/packages/web/.next",
-  "installCommand": "cd app && npm install"
+  "installCommand": "cd app && npm install",
+  "framework": null
 }
