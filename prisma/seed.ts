@@ -155,12 +155,18 @@ async function main() {
   ]
 
   for (const fournisseurData of fournisseurs) {
-    const fournisseur = await prisma.fournisseur.upsert({
-      where: { nom: fournisseurData.nom },
-      update: {},
-      create: fournisseurData,
+    const existing = await prisma.fournisseur.findFirst({
+      where: { nom: fournisseurData.nom }
     })
-    console.log('✅ Fournisseur créé:', fournisseur.nom)
+    
+    if (!existing) {
+      const fournisseur = await prisma.fournisseur.create({
+        data: fournisseurData,
+      })
+      console.log('✅ Fournisseur créé:', fournisseur.nom)
+    } else {
+      console.log('ℹ️  Fournisseur existe déjà:', existing.nom)
+    }
   }
 
   console.log('🎉 Initialisation terminée!')
