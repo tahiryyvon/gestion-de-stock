@@ -8,13 +8,14 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspace=packages/web",
-    "build": "npm run build --workspace=packages/web",
+    "build": "npx prisma generate && npm run build --workspace=packages/web",
     "build:desktop": "npm run build --workspace=packages/desktop",
     "start": "npm run start --workspace=packages/web",
     "lint": "npm run lint --workspaces",
     "test": "npm run test --workspaces",
     "db:migrate": "npm run db:migrate --workspace=packages/web",
-    "db:seed": "npm run db:seed --workspace=packages/web"
+    "db:seed": "npm run db:seed --workspace=packages/web",
+    "postinstall": "npx prisma generate"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
